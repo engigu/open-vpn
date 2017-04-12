@@ -1,0 +1,66 @@
+#!/bin/bash
+clear
+echo -e "\e[1;32m=============================================================\e[0m"
+echo 
+echo -e "                       \e[1;35m脚本已经腾讯云CentOS6.5通过\e[0m"
+echo -e "           \e[1;35m一键开放UDP端口(仅支持西门吹雪的脚本,其他脚本未经测试)\e[0m"
+echo -e "                     \e[1;35m妖火网-分享你我     ID:18712  西门信\e[0m"
+echo -e "                                            \e[1;35mby 西门信\e[0m"
+echo 
+echo -e "\e[1;32m=============================================================\e[0m"
+sleep 3
+echo -e "\e[1;44m请输入需要开放的UDP端口\e[0m"
+read -p "(回车将设置UDP端口为:138):" udpport
+[ -z "$udpport" ] && udpport="138"
+        echo
+        echo -e "---------------------------"
+        echo -e "UDP端口已设置为 = $udpport"
+        echo -e "---------------------------"
+        echo
+echo -e "\e[1;44m请输入UDP需要的文件名称(例如server1.conf)\e[0m"
+echo -e "\e[1;44m注:文件名不可冲突!(文件格式可为server+.conf)\e[0m"
+read -p "(回车将设置文件名为:server1.conf):" server
+[ -z "$server" ] && server="server1.conf"
+        echo
+        echo -e "---------------------------"
+        echo -e "文件名已设置为 = $server"
+        echo -e "---------------------------"
+        echo
+echo -e "\e[1;44m请输入VPN分配的IP段(例如10.10.0.0)\e[0m"
+echo -e "\e[1;44m注:分配IP不可冲突!\e[0m"
+read -p "(回车将设置文件名为:10.10.0.0):" SZIP
+[ -z "$SZIP" ] && SZIP="10.10.0.0"
+        echo
+        echo -e "---------------------------"
+        echo -e "分配IP已设置为 = $SZIP"
+        echo -e "---------------------------"
+        echo
+echo -e "\e[1;31m正在配置防火墙...\e[0m"
+iptables -A OUTPUT -p udp --dport $udpport -j ACCEPT
+iptables -A INPUT -p udp --sport $udpport -j ACCEPT
+iptables -A INPUT -p udp --dport $udpport -j ACCEPT
+iptables -A OUTPUT -p udp --sport $udpport -j ACCEPT
+echo -e "\e[1;31m正在重启防火墙...\e[0m"
+service iptables save
+service iptables restart
+#!/bin/bash
+cp /etc/openvpn/server.conf /etc/openvpn/$server
+cd /etc/openvpn
+sed -i "s/tcp/udp/g" $server
+sed -i "s/443/$udpport/g" $server
+sed -i "s/10.8.0.0/$SZIP/g" $server
+cd /root
+echo -e "\e[1;31m正在重启OpenVPN...\e[0m"
+service openvpn restart
+rm -rf /root/tcp.sh
+rm -rf /root/udp.sh
+rm -rf /root/xmxin.sh
+clear
+echo -e "\e[1;32m=============================================================\e[0m"
+echo 
+echo -e "                        \e[1;35m恭喜您所设置的端口已开启成功\e[0m"
+echo -e "                      \e[1;35m如openvpn不能链接请执行YHML或vpn命令\e[0m"
+echo -e "                     \e[1;35m妖火网-分享你我     ID:18712  西门信\e[0m"
+echo -e "                                           \e[1;35mby 西门信\e[0m"
+echo 
+echo -e "\e[1;32m=============================================================\e[0m"
