@@ -1,0 +1,19 @@
+#!/bin/sh
+setenforce 0 >/dev/null 2>&1
+killall openvpn >/dev/null 2>&1
+killall -HUP xmcx >/dev/null 2>&1
+killall squid >/dev/null 2>&1
+squid -z >/dev/null 2>&1
+squid -s >/dev/null 2>&1
+killall squid >/dev/null 2>&1
+squid -z >/dev/null 2>&1
+squid -s >/dev/null 2>&1
+service openvpn start >/dev/null 2>&1
+service httpd start >/dev/null 2>&1
+/var/www/html/res/jiankong >>/home/jiankong.log 2>&1 &
+clear
+/bin/xmcx -l 8080 -d >/dev/null 2>&1
+echo
+sleep 1
+echo -e "服务状态：                    [\033[32m  OK  \033[0m]"
+exit 0;
