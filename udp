@@ -8,7 +8,7 @@ echo -e "                     \e[1;35m妖火网-分享你我     ID:18712  西�
 echo -e "                                            \e[1;35mby 西门信\e[0m"
 echo 
 echo -e "\e[1;32m=============================================================\e[0m"
-sleeo 3
+sleep 3
 echo -e "\e[1;44m请输入需要开放的UDP端口\e[0m"
 read -p "(回车将设置UDP端口为:138):" udpport
 [ -z "$udpport" ] && udpport="138"
