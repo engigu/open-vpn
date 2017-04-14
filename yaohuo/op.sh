@@ -66,20 +66,7 @@ echo "======================================================================="
 echo 
 echo "脚本已由阿里云/腾讯云  测试通过"
 echo 
-echo -n "请输入妖火论坛网址： "
-read PASSWD
-key=`echo -n $PASSWD|md5sum`
-if [[ ${key%%\ *} == $pass ]]
-    then
-        echo 
-        echo 验证成功！[本机IP：$IPAddress]
-    else
-        echo
-        echo "验证失败！"		
-		echo "$Error";
-		
-exit 0;
-fi
+echo [本机IP：$IPAddress]
 
 echo -n "  请输入后台管理员密码："
 read SuperPass
