@@ -3141,7 +3141,7 @@ key-direction 1
 cat http-yd1-quanguo-1.ovpn http-yd1-quanguo-2.ovpn http-yd1-quanguo-3.ovpn>qyun-yd-hunan2.ovpn
 
 Referer='statisticsinfo: channelid=28020001&uuid=C891991B-2454-4024-A5C7-98A21A9A425A&clientpage=0&osversion=iOS10.2&clientallid=000000100000000000283.1.1&userid=&usercode=&isfreeLimt=0';
-
+Agent='User-Agent: WoReader/3.1.1 (iPhone; iOS 10.2; Scale/3.00)';
 echo "# 青云云免配置 全国联通1
 # 本文件由系统自动生成
 # 类型：HTTP转接
@@ -3156,7 +3156,7 @@ resolv-retry 60
 http-proxy 10.0.0.172 80
 remote iread.wo.com.cn/&from=http://$IP:443 443
 http-proxy-option EXT1 "Host : iread.wo.com.cn"
-http-proxy-option EXT1 "User-Agent: WoReader/3.1.1 (iPhone; iOS 10.2; Scale/3.00)"
+http-proxy-option EXT1 "$Agent"
 http-proxy-option EXT1 "$Referer" 
 resolv-retry infinite">http-lt-quanguo-1.ovpn
 echo '
