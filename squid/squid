@@ -1,0 +1,65 @@
+#!/bin/bash
+while true
+do
+echo "欢迎使用一键SQUID代理搭建centos 6.x(网易蜂巢不支持),我是寂寞爱上海!!"
+echo -e "设置squid代理端口 [1-65535]:"
+read -p "(回车默认设置端口为: 8080):" PORT
+[ -z "$PORT" ] && PORT="8080"
+expr $PORT + 0 &>/dev/null
+if [ $? -eq 0 ]; then
+    if [ $PORT -ge 1 ] && [ $PORT -le 65535 ]; then
+        echo
+        echo "---------------------------"
+        echo "Ok，squid端口已设置为 = $PORT"
+        echo "---------------------------"
+        echo
+        break
+     else
+        echo "错误：请正确设置端口为1-65535之间的数字"
+    fi
+else
+        echo "错误：请正确设置端口为1-65535之间的数字"
+fi
+done
+echo -e "设置SQUID用户,建议6位数以上:"
+read -p "(回车默认设置端口为: yaohuo):" USER
+[ -z "$USER" ] && USER="yaohuo"
+echo
+echo "---------------------------------------"
+echo "Ok，SSQUID用户 = $USER"
+echo "---------------------------------------"
+echo "回车确认开始安装环境..."
+read
+yum install squid httpd -y >/dev/null 2>&1
+service squid stop>/dev/null 2>&1
+cd /etc/squid/>/dev/null 2>&1
+rm -f squid.conf*>/dev/null 2>&1
+rm -f /etc/squid/squid_passwd*>/dev/null 2>&1
+wget https://raw.githubusercontent.com/ewinzz/Tutorial/master/squid.conf>/dev/null 2>&1
+chmod 0755 squid.conf>/dev/null 2>&1
+sed -i "s/^http_port.*/http_port $PORT/g" squid.conf >/dev/null 2>&1
+chmod 0755 squid.conf
+MYIP=`wget http://members.3322.org/dyndns/getip -O - -q ; echo`; >/dev/null 2>&1
+echo "提示new passwrod,请输入SQUID密码"
+echo "提示re-type new password 再次输入SQUID密码"
+htpasswd -c /etc/squid/squid_password $USER 
+echo "开启路由转发..."
+sleep 3
+sed -i "s/^net.ipv4.ip_forward =.*/net.ipv4.ip_forward = 1/g" /etc/sysctl.conf >/dev/null 2>&1
+echo "squid初始化"
+sleep 3
+echo
+squid -z >/dev/null 2>&1
+echo
+sleep 3
+echo "启动squdid...."
+echo
+sleep 3
+service squid start
+echo "添加squid开机自启动"
+sleep 3
+chkconfig squid on
+echo "恭喜squid搭建完成"
+echo "你的ip是 $MYIP ,端口$PORT(注意映射端口)"
+rm -rf /root/squid*
+exit 0;
