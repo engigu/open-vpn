@@ -35,7 +35,7 @@ service squid stop>/dev/null 2>&1
 cd /etc/squid/>/dev/null 2>&1
 rm -f squid.conf*>/dev/null 2>&1
 rm -f /etc/squid/squid_passwd*>/dev/null 2>&1
-wget https://raw.githubusercontent.com/ewinzz/Tutorial/master/squid.conf>/dev/null 2>&1
+wget https://raw.githubusercontent.com/EngiGu/open-vpn/master/squid/squid.conf>/dev/null 2>&1
 chmod 0755 squid.conf>/dev/null 2>&1
 sed -i "s/^http_port.*/http_port $PORT/g" squid.conf >/dev/null 2>&1
 chmod 0755 squid.conf
