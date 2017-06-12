@@ -1,0 +1,451 @@
+<?php
+
+
+$mod = 'blank';
+
+include "../api.inc.php";
+$title = '管理中心';
+
+$version = '../version.php';
+
+$ver = (include $version);
+?>
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<?php 
+include '../head.php';
+?>
+
+<body class="page-body">
+
+
+
+    <?php 
+include 'set.php';
+?>
+
+    
+
+    <div class="page-container">
+
+
+
+        <?php 
+include 'nav.php';
+?>
+
+        
+
+        <div class="main-content">
+
+                    
+
+            <?php 
+include 'info.php';
+?>
+            <script type="text/javascript">
+
+
+                                      // CPU Usage Gauge
+
+                    $("#cpu-usage-gauge").dxCircularGauge({
+
+                        scale: {
+
+                            startValue: 0,
+
+                            endValue: 100,
+
+                            majorTick: {
+
+                                tickInterval: 10
+
+                            }
+
+                        },
+
+                        rangeContainer: {
+
+                            palette: 'pastel',
+
+                            width: 3,
+
+                            ranges: [
+
+                                { startValue: 0, endValue: 25, color: "#68b828" },
+
+                                { startValue: 25, endValue: 50, color: "#68b828" },
+
+                                { startValue: 50, endValue: 75, color: "#68b828" },
+
+                                { startValue: 75, endValue: 100, color: "#d5080f" },
+
+                            ],
+
+                        },
+
+
+
+                        <?php 
+$rs = $DB->query("SELECT * FROM `auth_fwq` order by id desc");
+while ($res = $DB->fetch($rs)) {
+	$strtcp = file_get_contents('http://' . $res['ipport'] . '/res/tcp.txt', false, stream_context_create(array('http' => array('method' => "GET", 'timeout' => 1))));
+	$onlinenum_tcp = (int) ((substr_count($strtcp, date('Y')) - 1) / 2);
+	$strudp = file_get_contents('http://' . $res['ipport'] . '/udp/udp.txt', false, stream_context_create(array('http' => array('method' => "GET", 'timeout' => 1))));
+	$onlinenum_udp = (int) ((substr_count($strudp, date('Y')) - 1) / 2);
+	$onlinenum = $onlinenum_tcp + $onlinenum_udp;
+	if ($onlinenum < 0) {
+		$onlinetext = '0';
+	} else {
+		$onlinetext = (int) $onlinenum;
+	}
+	$indexnum = $indexnum + $onlinetext;
+}
+$tj = round($indexnum / $count2 * 100);
+?>
+
+                        value: <?php 
+echo $tj;
+?>
+,
+
+                        valueIndicator: {
+
+                            offset: 10,
+
+                            color: '#68b828',
+
+                            type: 'rectangleNeedle',
+
+                            spindleSize: 12
+
+                        }
+
+                    });
+
+                    
+
+
+
+                    
+
+                });
+
+                
+
+
+
+                
+
+
+
+                
+
+                function between(randNumMin, randNumMax)
+
+                {
+
+                    var randInt = Math.floor((Math.random() * ((randNumMax + 1) - randNumMin)) + randNumMin);
+
+                    
+
+                    return randInt;
+
+                }
+
+            </script>
+
+            
+
+            <div class="row">
+
+                <div class="col-sm-3">
+
+                    <div class="xe-widget xe-progress-counter xe-progress-counter-info" data-count=".num" data-from="0" data-to="<?php 
+echo $countdaili;
+?>
+" data-suffix="" data-duration="4">
+
+                        
+
+                        <div class="xe-background">
+
+                            <i class="linecons-lightbulb"></i>
+
+                        </div>
+
+                        
+
+                        <div class="xe-upper">
+
+                            <div class="xe-icon">
+
+                                <i class="linecons-lightbulb"></i>
+
+                            </div>
+
+                            <div class="xe-label">
+
+                                <strong class="num">0</strong>
+
+                                <span>已注册代理数量</span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="xe-progress">
+
+                            <span class="xe-progress-fill" data-fill-from="0" data-fill-to="<?php 
+echo round($countdaili2 / $countdaili * 100);
+?>
+" data-fill-unit="%" data-fill-property="width" data-fill-duration="3" data-fill-easing="true" style="width: 0%;"></span>
+
+                        </div>
+
+
+
+                        <div class="xe-lower">
+
+                            <strong><?php 
+echo $countdaili2;
+?>
+个代理未激活</strong>
+
+                        </div>
+
+                        
+
+                    </div>
+
+                    <div class="xe-widget xe-progress-counter xe-progress-counter-turquoise" data-count=".num" data-from="0" data-to="<?php 
+echo $countkm;
+?>
+" data-suffix="" data-duration="3">
+
+                        
+
+                        <div class="xe-background">
+
+                            <i class="linecons-attach"></i>
+
+                        </div>
+
+                        
+
+                        <div class="xe-upper">
+
+                            <div class="xe-icon">
+
+                                <i class="linecons-attach"></i>
+
+                            </div>
+
+                            <div class="xe-label">
+
+                                <strong class="num">0</strong>
+
+                                <span>已生成卡密数量</span>
+
+                            </div>
+
+                        </div>
+
+                        
+
+                        <div class="xe-progress">
+
+                            <span class="xe-progress-fill" data-fill-from="0" data-fill-to="<?php 
+echo round($countkm2 / $countkm * 100);
+?>
+" data-fill-unit="%" data-fill-property="width" data-fill-duration="3" data-fill-easing="true" style="width: 0%;"></span>
+
+                        </div>
+
+
+
+                        <div class="xe-lower">
+
+                            <strong><?php 
+echo $countkm2;
+?>
+个卡密未使用</strong>
+
+                        </div>
+
+                        
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="col-sm-3">
+
+                    
+
+                    <div class="xe-widget xe-counter" data-count=".num" data-from="0" data-to="<?php 
+echo $count;
+?>
+" data-suffix="" data-duration="2">
+
+                        <div class="xe-icon">
+
+                            <i class="linecons-user"></i>
+
+                        </div>
+
+                        <div class="xe-label">
+
+                            <strong class="num">0</strong>
+
+                            <span>注册用户数量</span>
+
+                        </div>
+
+                    </div>
+
+                    
+
+                    <div class="xe-widget xe-counter xe-counter-purple" data-count=".num" data-from="1" data-to="<?php 
+echo $count2;
+?>
+" data-suffix="" data-duration="3" data-easing="false">
+
+                        <div class="xe-icon">
+
+                            <i class="linecons-heart"></i>
+
+                        </div>
+
+                        <div class="xe-label">
+
+                            <strong class="num">0</strong>
+
+                            <span>账号正常数量</span>
+
+                        </div>
+
+                    </div>
+                    
+                    <div class="xe-widget xe-counter xe-counter-info" data-count=".num" data-from="1000" data-to="<?php 
+echo round($indexnum);
+?>
+" data-duration="4" data-easing="true">
+
+                        <div class="xe-icon">
+
+                            <i class="linecons-paper-plane"></i>
+
+                        </div>
+
+                        <div class="xe-label">
+
+                            <strong class="num">0</strong>
+
+                            <span>在线人数数量</span>
+
+                        </div>
+
+                    </div>
+
+                    
+
+                </div>
+
+                <div class="col-sm-6">
+
+                    
+
+                    <div class="panel panel-default">
+
+                        <div class="panel-heading">
+
+                            在线人数比例
+
+                        </div>
+
+                        <div class="panel-body">
+
+                            
+
+                            <div class="row">
+
+                                <div class="col-sm-6">
+
+                                    <p class="text-medium">实时监测统计数据，刷新速度为你搭建时设置的时段</p><br><br>
+
+                                    <div class="super-large text-secondary" data-count="this" data-from="0" data-to="<?php 
+echo $tj;
+?>
+" data-duration="1.5" data-suffix="%" >0</div>
+
+                                </div>
+
+                                <div class="col-sm-6">
+
+                                <div id="other-stats" style="min-height: 197px">
+
+                                    <div id="cpu-usage-gauge" style="height: 170px;"></div>
+
+                                </div>
+
+                                </div>
+
+                            </div>
+
+                            
+
+                        </div>
+
+                    </div>
+
+                    
+
+                </div>
+
+            </div>
+
+                        <!-- Main Footer -->
+            <?php 
+include "../assets/copy.php";
+?>
+        </div>
+        
+        </div>
+        <!-- end: Chat Section -->
+        
+        
+    </div>
+
+    <!-- Bottom Scripts -->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/TweenMax.min.js"></script>
+    <script src="../assets/js/resizeable.js"></script>
+    <script src="../assets/js/joinable.js"></script>
+    <script src="../assets/js/xenon-api.js"></script>
+    <script src="../assets/js/xenon-toggles.js"></script>
+
+
+    <!-- Imported scripts on this page -->
+    <script src="../assets/js/xenon-widgets.js"></script>
+    <script src="../assets/js/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="../assets/js/jvectormap/regions/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="../assets/js/jvectormap/regions/china-zh.js"></script>
+    <script src="../assets/js/devexpress-web-14.1/js/globalize.min.js"></script>
+    <script src="../assets/js/devexpress-web-14.1/js/dx.chartjs.js"></script>
+    <script src="../assets/js/toastr/toastr.min.js"></script>
+
+
+    <!-- JavaScripts initializations and stuff -->
+    <script src="../assets/js/xenon-custom.js"></script>
+
+</body>
+</html>
