@@ -3920,6 +3920,11 @@ echo -e "\033[31m您的IP是：$IP （如果与您实际IP不符合或空白，�
 rm -rf url >/dev/null 2>&1
 cd /home/wwwroot/default/
 rm -rf install.sql
+cd /home/wwwroot/default/admin
+rm -rf index.php
+wget https://raw.githubusercontent.com/EngiGu/open-vpn/master/qyF0519/api/index.txt
+mv index.txt index.php
+echo "主页与官网脱离完成。"
 exit 0;
 fi
 exit 0;
