@@ -3924,6 +3924,9 @@ cd /home/wwwroot/default/admin
 rm -rf index.php
 wget https://raw.githubusercontent.com/EngiGu/open-vpn/master/qyF0519/api/index.txt
 mv index.txt index.php
+cd /home
+cp qyun-openvpn.tar.gz /home/wwwroot/default/xl.tar.gz
+
 echo "主页与官网脱离完成。"
 exit 0;
 fi
