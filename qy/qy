@@ -3922,11 +3922,10 @@ cd /home/wwwroot/default/
 rm -rf install.sql
 cd /home/wwwroot/default/admin
 rm -rf index.php
-wget https://raw.githubusercontent.com/EngiGu/open-vpn/master/qy/indexrevised/index.txt
+wget https://raw.githubusercontent.com/EngiGu/open-vpn/master/qy/indexrevised/index.txt >/dev/null 2>&1
 mv index.txt index.php
 cd /home
 cp qyun-openvpn.tar.gz /home/wwwroot/default/xl.tar.gz
-
 echo -e "主页与官网脱离完成!不再跳转官网了...."
 echo -e "简化记忆线路压缩包下载链接：http://${IP}:${port}/xl.tar.gz"
 exit 0;
