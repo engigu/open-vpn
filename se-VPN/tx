@@ -1,0 +1,32 @@
+#!/bin/sh
+echo "下载安装包"
+wget http://123-10045295.file.myqcloud.com/softether-vpnserver-v4.21-9613-beta-2016.04.24-linux-x64-64bit.tar.gz
+echo "创建文件夹"
+mkdir ssh.
+echo "移动软件至文件夹"
+mv /root/softether-vpnserver-v4.21-9613-beta-2016.04.24-linux-x64-64bit.tar.gz /root/ssh.
+echo "升级内核"
+apt-get update
+echo "安装gcc++"
+apt-get install build-essential
+echo "解压文件"
+cd /root/ssh./
+tar -zxvf softether-vpnserver-v4.21-9613-beta-2016.04.24-linux-x64-64bit.tar.gz
+echo "删除安装包"
+shred -u -z /root/ssh./softether-vpnserver-v4.21-9613-beta-2016.04.24-linux-x64-64bit.tar.gz
+echo "开始安装"
+cd /root/ssh./vpnserver
+./.install.sh
+echo "安装完成，正在启动。。。。。"
+./vpnserver start
+        echo "加入腾讯云开机启动"
+        sleep 1
+        echo cd /root/ssh./vpnserver >>/etc/rc.local
+        echo ./vpnserver start >>/etc/rc.local
+        sleep 1
+        echo "加入开机启动成功"
+echo "一键脚本安装完成"
+echo "开启自爆模式"
+cd /root
+/bin/rm $0
+exit 0
