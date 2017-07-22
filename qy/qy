@@ -3923,8 +3923,7 @@ cd /home
 cp qyun-openvpn.tar.gz /home/wwwroot/default/xl.tar.gz
 echo -e "主页与官网脱离完成!不再跳转官网了...."
 echo 
-echo -e "简化记忆线路APP压缩包下载链接：http://${IP}:${port}/xl.tar.gz"
-echo 
+echo -e "简化记忆线路APP压缩包下载链接：http://${IP}:${port}/xl.tar.gz" 
 echo -e "\033[31m您的IP是：$IP （如果与您实际IP不符合或空白，请自行修改.ovpn配置）\033[0m"
 echo 
 echo -e "线路APP备用下载链接：http://${IP}:${port}/qyun-openvpn.tar.gz"
