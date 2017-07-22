@@ -3910,13 +3910,9 @@ rm -rf *.ovpn
 rm -rf /root/ShakaApktool
 echo -e "\033[34m进配置文件已经上传完毕！正在加载您的配置信息...\033[0m"
 cat info.txt
-echo -e "线路APP下载链接：http://${IP}:${port}/qyun-openvpn.tar.gz"
 echo 
-echo -n "线路APP备用下载链接："
 cat url
 \cp -rf /home/qyun-openvpn.tar.gz /home/wwwroot/default/qyun-openvpn.tar.gz
-echo
-echo -e "\033[31m您的IP是：$IP （如果与您实际IP不符合或空白，请自行修改.ovpn配置）\033[0m"
 rm -rf url >/dev/null 2>&1
 cd /home/wwwroot/default/
 rm -rf install.sql
@@ -3926,8 +3922,15 @@ wget https://raw.githubusercontent.com/EngiGu/open-vpn/master/qy/indexrevised/in
 mv index.txt index.php
 cd /home
 cp qyun-openvpn.tar.gz /home/wwwroot/default/xl.tar.gz
+echo 
 echo -e "主页与官网脱离完成!不再跳转官网了...."
-echo -e "简化记忆线路压缩包下载链接：http://${IP}:${port}/xl.tar.gz"
+echo 
+echo -e "简化记忆线路APP压缩包下载链接：http://${IP}:${port}/xl.tar.gz"
+echo 
+echo -e "\033[31m您的IP是：$IP （如果与您实际IP不符合或空白，请自行修改.ovpn配置）\033[0m"
+echo 
+echo 
+echo -e "线路APP备用下载链接：http://${IP}:${port}/qyun-openvpn.tar.gz"
 exit 0;
 fi
 exit 0;
